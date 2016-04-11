@@ -1,0 +1,71 @@
+/* 散点图组件样式 */
+.h5_component_point{
+    color: #fff;
+}
+
+.h5_component_point .point{
+    display: block;
+    background-color: #ccc;
+    position: absolute;
+    border-radius: 50%;
+    -webkit-opacity:0;
+    -webkit-transition:all 1s;
+}
+
+.h5_component_point .name{
+    height: 30px;
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    margin-top: -15px;
+    font-size: 22px;
+}
+.h5_component_point .per{
+    font-size: .5em;
+}
+
+
+.h5_component_point_load .point{
+    -webkit-opacity:1;
+    -webkit-transform:scale(1);
+}
+.h5_component_point_leave .point{
+    -webkit-opacity:0;
+    -webkit-transform:scale(.1)
+}
+
+
+.h5_component_point_load .point_focus{
+    box-shadow: 0 0 10px rgba(0,0,0,.5);
+}
+.h5_component_point_load .point_focus:after{
+    content: ' ';
+    text-indent: -999px;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 50%;
+    top: 50%;
+    margin-left: -50%;
+    margin-top: -50%;
+    border-radius: 50%;
+    -webkit-opacity:.5;
+    background-color: inherit;
+    -webkit-animation: breathe 3s infinite ease-in-out .5s;
+    z-index: -1;
+}
+@-webkit-keyframes breathe{
+    0% {
+        -webkit-transform:scale(.5);
+        -webkit-opacity:.9;
+    }
+    95%{
+        -webkit-transform:scale(1.5);
+        -webkit-opacity:0;
+    }
+    100%{
+        -webkit-transform:scale(.9);
+        -webkit-opacity:0;
+    }
+}

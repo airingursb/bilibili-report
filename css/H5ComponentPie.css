@@ -1,0 +1,19 @@
+/* 饼图组件样式 */
+.h5_component_pie{
+}
+
+.h5_component_pie canvas{
+    position: absolute;
+    left: 0;
+    top: 0; /* 用canvas做动画，会进行分层，要用到  z-index */
+    width: 100%;
+    height: 100%;
+}
+
+.h5_component_pie .text{
+    position: absolute;
+    z-index: 99;
+    text-align: center;
+    height: 24px;
+    transition:all 1s;
+}
