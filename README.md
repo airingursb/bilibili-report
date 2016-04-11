@@ -3,6 +3,8 @@ Bilibili用户报告（Web App）
 
 **演示地址：**[http://ursb.me/bilibili-report](http://ursb.me/bilibili-report)
 
+![bilibili-report](http://7xkcl8.com1.z0.glb.clouddn.com/ursb2016041101.PNG-jieping.jpg)
+
 ## B站相关爬虫
 
 1. B站用户爬虫：[http://github.com/airingursb/bilibili-user](http://github.com/airingursb/bilibili-user)
