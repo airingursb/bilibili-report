@@ -1,9 +1,8 @@
 /* 垂直柱状组件样式 */
-.h5_component_bar_v{
+.h5_component_bar_v {
 }
 
-
-.h5_component_bar_v .line{
+.h5_component_bar_v .line {
     float: left;
     height: 100%;
     font-size: 12px;
@@ -11,7 +10,7 @@
 
 }
 
-.h5_component_bar_v .name{
+.h5_component_bar_v .name {
     width: 100%;
     position: absolute;
     left: 0;
@@ -21,7 +20,7 @@
     text-align: center;
 }
 
-.h5_component_bar_v .rate{
+.h5_component_bar_v .rate {
     height: 100%;
     width: 15px;
     position: absolute;
@@ -29,7 +28,8 @@
     left: 50%;
     margin-left: -8px;
 }
-.h5_component_bar_v .rate .bg{
+
+.h5_component_bar_v .rate .bg {
     background-color: #99c0ff;
     width: 100%;
     height: 0%;
@@ -39,7 +39,7 @@
     border-radius: 3px;
 }
 
-.h5_component_bar_v .per{
+.h5_component_bar_v .per {
     width: 100%;
     position: absolute;
     left: 0;
@@ -49,26 +49,25 @@
     line-height: 20px;
     text-align: center;
     color: #99c0ff;
-    -webkit-opacity:0;
+    -webkit-opacity: 0;
 }
 
-.h5_component_bar_v_load .rate .bg{
-    -webkit-transition:all 1s .5s;
+.h5_component_bar_v_load .rate .bg {
+    -webkit-transition: all 1s .5s;
     height: 100%;
 }
 
-
-.h5_component_bar_v_leave .rate .bg{
+.h5_component_bar_v_leave .rate .bg {
     height: 0%;
 }
 
-
-.h5_component_bar_v_load .per{
-    -webkit-transition:all 1s 1.5s;
-    -webkit-opacity:1;
+.h5_component_bar_v_load .per {
+    -webkit-transition: all 1s 1.5s;
+    -webkit-opacity: 1;
 }
-.h5_component_bar_v_leave .per{
-    -webkit-opacity:0;
+
+.h5_component_bar_v_leave .per {
+    -webkit-opacity: 0;
 }
 
 

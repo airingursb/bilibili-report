@@ -1,523 +1,546 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
 
-    <title>B站用户报告</title>
+  <title>B站用户报告</title>
 
-    <!-- 载入所有的组件资源 -->
-    <script type="text/javascript" src="js/lib/jquery.js"></script>
-    <script type="text/javascript" src="js/lib/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="js/lib/jquery.fullPage.js"></script>
+  <!-- 载入所有的组件资源 -->
+  <script type="text/javascript" src="js/lib/jquery.js"></script>
+  <script type="text/javascript" src="js/lib/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="js/lib/jquery.fullPage.js"></script>
 
 
-    <!-- H5对象：进行内容管理 -->
+  <!-- H5对象：进行内容管理 -->
 
-    <script type="text/javascript" src="js/H5.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/H5.css" >
+  <script type="text/javascript" src="js/H5.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/H5.css">
 
-    <script type="text/javascript" src="js/H5_loading.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/H5_loading.css" >
+  <script type="text/javascript" src="js/H5_loading.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/H5_loading.css">
 
-    <!-- 页面逻辑的样式 -->
-    <style type="text/css">
+  <!-- 页面逻辑的样式 -->
+  <style type="text/css">
 
-        body{
-            margin: 0;
-            padding: 0;
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    .h5_page {
+      background-image: url(imgs/page_bg.png);
+    }
+
+    .h5_page_face {
+      background-image: url(imgs/face_bg.png);
+    }
+
+    .h5_component_name_slogan {
+      -webkit-animation: rock 2s infinite 2s;
+    }
+
+    @-webkit-keyframes rock {
+      0% {
+        transform: rotate(0deg)
+      }
+      5% {
+        transform: rotate(3deg)
+      }
+      10% {
+        transform: rotate(-4deg)
+      }
+      15% {
+        transform: rotate(3deg)
+      }
+      20% {
+        transform: rotate(-2deg)
+      }
+      25% {
+        transform: rotate(1deg)
+      }
+      30% {
+        transform: rotate(-1deg)
+      }
+      70% {
+        transform: rotate(0deg)
+      }
+      100% {
+        transform: rotate(0deg)
+      }
+    }
+
+    .h5_component_name_caption {
+      background-image: url(imgs/page_caption_bg.png);
+      width: 283px;
+      height: 160px;
+      text-align: center;
+      line-height: 140px;
+      font-size: 20px;
+      color: #fff;
+    }
+
+    .h5_component_name_back {
+      top: 30px;
+      -webkit-animation: back 2s infinite 2s;
+    }
+
+    @-webkit-keyframes back {
+      50% {
+        top: 20px;
+      }
+    }
+  </style>
+
+
+<body>
+
+<div class="loading">
+
+  <div class="double-bounce1"></div>
+  <div class="double-bounce2"></div>
+
+  <div id="rate">0%</div>
+
+</div>
+
+<!-- 加载 H5组件 相关资源 -->
+<script type="text/javascript">
+
+  var res = [
+    'Base', 'Bar', 'Bar_v', 'Point', 'Polyline',
+    'Radar', 'Pie', 'Ring'
+  ];
+  var html = [];
+  for (s in res) {
+    html.push('<script type="text/javascript" src="js/H5Component' + res[s] + '.js"><\/script>');
+    html.push('<link rel="stylesheet" type="text/css" href="css/H5Component' + res[s] + '.css">');
+  }
+  document.write(html.join(''));
+</script>
+
+<!-- 主要逻辑 -->
+<script type="text/javascript">
+
+  $(function () {
+
+    var h5 = new H5();
+
+    h5.whenAddPage = function () {
+      this.addComponent('slide_up', {
+        bg: 'imgs/footer.png',
+        css: {
+          opacity: 0,
+          left: 0, bottom: -20,
+          width: '100%', height: '20px', zIndex: 999
+        },
+        animateIn: {
+          opacity: 1, bottom: '-1px'
+        },
+        animateOut: {
+          opacity: 0, bottom: '-20px'
+        },
+        delay: 500
+      });
+    }
+
+    h5
+      .addPage('face')
+      .addComponent('logo', {
+        center: true,
+        width: 395,
+        height: 140,
+        bg: 'imgs/face_logo.png',
+        css: { opacity: 0 },
+        animateIn: { top: 100, opacity: 1 },
+        animateOut: { top: 0, opacity: 0 },
+      })
+      .addComponent('slogan', {
+        center: true,
+        width: 365,
+        height: 99,
+        bg: 'imgs/face_slogan.png',
+        css: { opacity: 0, top: 200 },
+        animateIn: { left: '50%', opacity: 1 },
+        animateOut: { left: '0%', opacity: 0 },
+        delay: 500
+      })
+      .addComponent('face_img_left', {
+        width: 370,
+        height: 493,
+        bg: 'imgs/face_img_left.png',
+        css: { opacity: 0, left: -50, bottom: -50 },
+        animateIn: { opacity: 1, left: 0, bottom: 0 },
+        animateOut: { opacity: 0, left: -50, bottom: -50 },
+        delay: 1000
+      })
+      .addComponent('face_img_right', {
+        width: 276,
+        height: 449,
+        bg: 'imgs/face_img_right.png',
+        css: { opacity: 0, right: -50, bottom: -50 },
+        animateIn: { opacity: 1, right: 0, bottom: 0 },
+        animateOut: { opacity: 0, right: -50, bottom: -50 },
+        delay: 1000
+      })
+      .addComponent('text', {
+        width: 500,
+        height: 30,
+        center: true,
+        text: '2016 © Airing  仅供学习使用',
+        css: {
+          opacity: 0, textAlign: 'center', color: 'yellow', fontSize: '12px'
+        },
+        animateIn: { opacity: 1, bottom: 20 },
+        animateOut: { opacity: 0, bottom: -50 },
+        onclick: function () {
+          window.location.href = 'http://github.com/airingursb/bilibili-report'
         }
+      })
+      .addPage().addComponent('bglogo', {
+      full: true,
+      bg: 'imgs/bglogo.png',
+      css: { opacity: 0 },
+      animateIn: { opacity: 1 },
+      animateOut: { opacity: 0 },
+      delay: 1000
+    })
+      .addPage()
+      .addComponent('caption', { text: '哔哩哔哩' })
+      .addComponent('text', {
+        width: 500,
+        height: 30,
+        center: true,
+        text: 'B站数据报告',
+        css: {
+          opacity: 0, textAlign: 'center', color: 'red', fontSize: '26px'
+        },
+        animateIn: { opacity: 1, top: 130 },
+        animateOut: { opacity: 0, top: 250 }
+      })
+      .addComponent('description', {
+        center: true,
+        width: 481,
+        height: 295,
+        bg: 'imgs/description_bg.gif',
+        css: {
+          opacity: 0,
+          padding: '15px 10px 10px 10px',
+          color: '#fff',
+          fontSize: '15px',
+          lineHeight: '18px',
+          textAlign: 'justify',
+          top: 240
+        },
+        text: 'bilibili弹幕视频网现为国内最大的年轻人潮流文化娱乐社区，该网站于2009年6月26日创建，又称“B站”。B站是一个ACG动漫文化很浓厚的场所，与A站（AcFun）共同撑起了中国动漫的一片天。',
+        animateIn: { opacity: 1, top: 190 },
+        animateOut: { opacity: 0, top: 240 },
+        delay: 1000
+      })
+      .addComponent('people', {
+        center: true,
+        width: 515,
+        height: 305,
+        bg: 'imgs/p1_people.png',
+        css: {
+          opacity: 0,
+          bottom: 0
+        },
+        animateIn: { opacity: 1, bottom: 40 },
+        animateOut: { opacity: 0, bottom: 0 },
+        delay: 500
+      })
 
-        .h5_page{
-            background-image: url(imgs/page_bg.png);
+      .addPage()
+      .addComponent('caption', { text: '年龄分布' })//polyline
+      .addComponent('polyline', {
+        type: 'polyline',
+        data: [['70后', .010, '#ff7676'], ['80后', .057], ['90后', .762, 'blue'], ['00后', .183]],
+        width: 530,
+        height: 300,
+        center: true,
+        css: { opacity: 0, top: 200 },
+        animateIn: { opacity: 1, top: 250 },
+        animateOut: { opacity: 0, top: 100 },
+      })
+      .addComponent('msg', {
+        text: '90后用户占到76%',
+        css: {
+          opacity: 0, top: 160,
+          textAlign: 'center', width: '100%', color: '#ff7676'
+        },
+        animateIn: { opacity: 1 },
+        animateOut: { opacity: 0 }
+      })
+      .addPage()
+      .addComponent('caption', { text: '性别分布' })//pie
+      .addComponent('pie', {
+        type: 'pie',
+        data: [
+          ['男', .552, '#ff7676'],
+          ['女', .449]
+        ],
+        css: { top: 200 },
+        width: 300,
+        height: 300,
+        center: true
+      })
+      .addComponent('msg', {
+        text: '男女之比 约为 5:4',
+        css: {
+          opacity: 0, bottom: 120,
+          textAlign: 'center', width: '100%', color: '#ff7676'
+        },
+        animateIn: { opacity: 1 },
+        animateOut: { opacity: 0 }
+      })
+      .addPage() //bar（bar_v）
+      .addComponent('caption', { text: '注册时间分布' })
+      .addComponent('bar',
+        {
+          type: 'bar',
+
+          width: 530,
+          height: 600,
+          data: [
+            ['2012', .019],
+            ['2013', .091],
+            ['2014', .212],
+            ['2015', .53, '#ff7676'],
+            ['2016', .133]
+          ],
+          css: {
+            top: 100,
+            opacity: 0
+          },
+          animateIn: {
+            opacity: 1,
+            top: 200,
+          },
+          animateOut: {
+            opacity: 0,
+            top: 100,
+          },
+          center: true,
         }
-        .h5_page_face{
-            background-image: url(imgs/face_bg.png);
+      )
+      .addComponent('msg', {
+        text: '2015年注册量 占到53.4%',
+        css: {
+          opacity: 0, bottom: 120,
+          textAlign: 'center', width: '100%', color: '#ff7676'
+        },
+        animateIn: { opacity: 1 },
+        animateOut: { opacity: 0 }
+      })
+
+      .addPage() //（bar_v）
+      .addComponent('caption', { text: '注册时间分布' })
+      .addComponent('bar',
+        {
+          type: 'bar_v',
+          width: 530,
+          height: 400,
+          data: [
+            ['2009', .001],
+            ['2010', .002],
+            ['2011', .003],
+            ['2012', .019],
+            ['2013', .091],
+            ['2014', .212],
+            ['2015', .53, '#ff7676'],
+            ['2016', .133]
+          ],
+          css: {
+            top: 220,
+            opacity: 0
+          },
+          animateIn: {
+            opacity: 1,
+            top: 200,
+          },
+          animateOut: {
+            opacity: 0,
+            top: 220,
+          },
+          center: true
         }
-        .h5_component_name_slogan{
-            -webkit-animation:rock 2s infinite 2s;
+      )
+      .addComponent('msg', {
+        text: '截止自16年2月的注册的20119823位用户',
+        css: {
+          opacity: 0, top: 180,
+          textAlign: 'center', width: '100%', color: '#ff7676'
+        },
+        animateIn: { opacity: 1 },
+        animateOut: { opacity: 0 }
+      })
+
+      .addPage()
+      .addComponent('caption', { text: '粉丝数目统计' })//radar
+
+      .addComponent('radar', {
+        type: 'radar',
+        width: 400,
+        height: 400,
+        data: [
+          ['个级', .834, '#ff7676'],
+          ['十级', .166],
+          ['百级', .048],
+          ['千级', .011],
+          ['万级', .002]
+        ],
+        css: {
+          top: 100,
+          opacity: 0
+        },
+        animateIn: {
+          opacity: 1,
+          top: 200,
+        },
+        animateOut: {
+          opacity: 0,
+          top: 100,
+        },
+        center: true,
+      })
+      .addPage()
+      .addComponent('caption', { text: '活跃度统计' })//ring
+      .addComponent('ring-all', {
+        type: 'ring', center: true,
+        width: 300, height: 300,
+        data: [['活跃用户', .4, '#ff7676']],
+        css: { top: 120, opacity: 0, fontSize: '30px' },
+        animateIn: { opacity: 1 },
+        animateOut: { opacity: 0 },
+      })
+      .addComponent('msg', {
+        text: '注册人数达到2000万',
+        css: {
+          opacity: 0, top: 300,
+          textAlign: 'center', width: '100%', color: '#ff7676'
+        },
+        animateIn: { opacity: 1 },
+        animateOut: { opacity: 0 },
+        delay: 1800,
+      })
+      .addComponent('ring-1', {
+        type: 'ring', center: true,
+        width: 140, height: 140,
+        data: [['Lv1', .2325, 'darkorange']],
+        css: { left: 30, bottom: 110, opacity: 0, fontSize: '12px' },
+        animateIn: { opacity: 1 },
+        animateOut: { opacity: 0 },
+      })
+      .addComponent('ring-2', {
+        type: 'ring',
+        width: 140, height: 140,
+        data: [['Lv2', .4829, 'darkorange']],
+        css: { left: 30, bottom: 110, opacity: 0, fontSize: '12px' },
+        animateIn: { opacity: 1 },
+        animateOut: { opacity: 0 },
+      })
+      .addComponent('ring-3', {
+        type: 'ring',
+        width: 140, height: 140,
+        data: [['Lv3', .2151, 'darkorange']],
+        css: { right: 30, bottom: 110, opacity: 0, fontSize: '12px' },
+        animateIn: { opacity: 1 },
+        animateOut: { opacity: 0 },
+      })
+      .addComponent('ring-3', {
+        type: 'ring',
+        width: 140, height: 140,
+        data: [['Lv4', .069, 'darkorange']],
+        css: { left: 70, bottom: 40, opacity: 0, fontSize: '12px' },
+        animateIn: { opacity: 1 },
+        animateOut: { opacity: 0 },
+      })
+      .addComponent('ring-3', {
+        type: 'ring',
+        width: 140, height: 140,
+        data: [['Lv5+', .003, 'darkorange']],
+        css: { right: 70, bottom: 40, opacity: 0, fontSize: '12px' },
+        animateIn: { opacity: 1 },
+        animateOut: { opacity: 0 },
+      })
+
+      .addPage()
+      .addComponent('caption', { text: '地理位置分布' })//point
+      .addComponent('point', {
+        type: 'point',
+        width: 300,
+        height: 300,
+        data: [
+          ['广东', 118527, '#ff7676'],
+          ['江苏', 83867, '#ffa3a4', '-35%', '-60%'],
+          ['上海', 75650, '#99c1ff', '50%', '-120%']
+        ],
+        css: {
+          bottom: '20%'
+        },
+        center: true,
+      })
+
+      .addPage('tail')
+      .addComponent('logo', {
+        center: true,
+        width: 359,
+        height: 129,
+        bg: 'imgs/tail_logo.png',
+        css: { top: 240, opacity: 0 },
+        animateIn: { opacity: 1, top: 210 },
+        animateOut: { opacity: 0, top: 240 },
+      })
+      .addComponent('slogan', {
+        center: true,
+        width: 314,
+        height: 46,
+        bg: 'imgs/tail_slogan.png',
+        css: { top: 280, opacity: 0 },
+        animateIn: { opacity: 1, left: '50%' },
+        animateOut: { opacity: 0, left: '0%' },
+        delay: 500,
+        onclick: function () {
+          window.location.href = 'http://ursb.me'
         }
-        @-webkit-keyframes rock{
-            0%{ transform:rotate(0deg)}
-            5%{ transform:rotate(3deg)}
-            10%{ transform:rotate(-4deg)}
-            15%{ transform:rotate(3deg)}
-            20%{ transform:rotate(-2deg)}
-            25%{ transform:rotate(1deg)}
-            30%{ transform:rotate(-1deg)}
-            70%{ transform:rotate(0deg)}
-            100%{ transform:rotate(0deg)}
+      })
+      .addComponent('share', {
+        width: 128,
+        height: 120,
+        bg: 'imgs/tail_share.png',
+        css: { opacity: 0, top: 110, right: 110 },
+        animateIn: { opacity: 1, top: 10, right: 10 },
+        animateOut: { opacity: 0, top: 110, right: 110 },
+        delay: 1000
+      })
+      .addComponent('back', {
+        width: 52,
+        height: 50,
+        bg: 'imgs/tail_back.png',
+        center: true,
+        onclick: function () {
+          $.fn.fullpage.moveTo(1)
         }
-
-        .h5_component_name_caption{
-            background-image: url(imgs/page_caption_bg.png);
-            width: 283px;
-            height: 160px;
-            text-align: center;
-            line-height: 140px;
-            font-size: 20px;
-            color: #fff;
+      })
+      .addComponent('text', {
+        width: 500,
+        height: 30,
+        center: true,
+        text: '2016 © Airing  仅供学习使用',
+        css: {
+          opacity: 0, textAlign: 'center', color: '#777', fontSize: '12px'
+        },
+        animateIn: { opacity: 1, bottom: 20 },
+        animateOut: { opacity: 0, bottom: -50 },
+        onclick: function () {
+          window.location.href = 'http://github.com/airingursb/bilibili-report'
         }
-        .h5_component_name_back{
-            top: 30px;
-            -webkit-animation:back 2s infinite 2s;
-        }
+      })
+      .loader(['imgs/face_bg.png', 'imgs/tail_back.png', 'imgs/tail_share.png', 'imgs/tail_slogan.png']);
 
-        @-webkit-keyframes back{
-            50%{ top: 20px; }
-        }
-    </style>
-
-    
-    <body>
-
-    <div class="loading">
-
-        <div class="double-bounce1"></div>
-        <div class="double-bounce2"></div>
-
-        <div id="rate">0%</div>
-
-    </div>
-
-    <!-- 加载 H5组件 相关资源 -->
-    <script type="text/javascript">
-
-        var res = [
-            'Base','Bar','Bar_v','Point','Polyline',
-            'Radar','Pie','Ring'
-            ];
-        var html = [];
-        for(s in res){
-            html.push('<script type="text/javascript" src="js/H5Component'+res[s]+'.js"><\/script>');
-            html.push('<link rel="stylesheet" type="text/css" href="css/H5Component'+res[s]+'.css">');
-
-        }
-        document.write( html.join('') );
-    </script>
-    <!-- 主要逻辑 -->
-    <script type="text/javascript">
-
-        $(function  () {
-           
-            var h5 = new H5();
-
-            h5.whenAddPage = function(){
-                this.addComponent('slide_up',{
-                    bg:'imgs/footer.png',
-                    css:{
-                        opacity:0,
-                        left:0,bottom:-20,
-                        width:'100%',height:'20px',zIndex:999
-                    },
-                    animateIn:{
-                        opacity:1,bottom:'-1px'
-                    },
-                    animateOut:{
-                        opacity:0,bottom:'-20px'
-                    },
-                    delay:500
-                });
-            }
-
-            h5
-            .addPage('face')
-                .addComponent('logo',{
-                    center:true,
-                    width:395,
-                    height:140,
-                    bg:'imgs/face_logo.png',
-                    css:{opacity:0},
-                    animateIn:{top:100,opacity:1},
-                    animateOut:{top:0,opacity:0},
-                })
-                .addComponent('slogan',{
-                    center:true,
-                    width:365,
-                    height:99,
-                    bg:'imgs/face_slogan.png',
-                    css:{opacity:0,top:200},
-                    animateIn:{left:'50%',opacity:1},
-                    animateOut:{left:'0%',opacity:0},
-                    delay:500
-                })
-                .addComponent('face_img_left',{
-                    width:370,
-                    height:493,
-                    bg:'imgs/face_img_left.png',
-                    css:{opacity:0,left:-50,bottom:-50},
-                    animateIn:{opacity:1,left:0,bottom:0},
-                    animateOut:{opacity:0,left:-50,bottom:-50},
-                    delay:1000
-                })
-                .addComponent('face_img_right',{
-                    width:276,
-                    height:449,
-                    bg:'imgs/face_img_right.png',
-                    css:{opacity:0,right:-50,bottom:-50},
-                    animateIn:{opacity:1,right:0,bottom:0},
-                    animateOut:{opacity:0,right:-50,bottom:-50},
-                    delay:1000
-                })
-                .addComponent('text',{
-                    width:500,
-                    height:30,
-                    center:true,
-                    text:'2016 © Airing  仅供学习使用',
-                    css:{
-                        opacity:0,textAlign:'center',color:'yellow',fontSize:'12px'
-                    },
-                    animateIn:{opacity:1,bottom:20},
-                    animateOut:{opacity:0,bottom:-50},
-                    onclick: function(){
-                        window.location.href='http://github.com/airingursb/bilibili-report'
-                    }
-                })
-                    .addPage().addComponent('bglogo',{
-                        full: true,
-                        bg:'imgs/bglogo.png',
-                        css:{opacity:0},
-                        animateIn:{opacity:1},
-                        animateOut:{opacity:0},
-                        delay:1000
-                    })
-            .addPage()
-                .addComponent('caption',{text:'哔哩哔哩'})
-                .addComponent('text',{
-                    width:500,
-                    height:30,
-                    center:true,
-                    text:'B站数据报告',
-                    css:{
-                        opacity:0,textAlign:'center',color:'red',fontSize:'26px'
-                    },
-                    animateIn:{opacity:1,top:130},
-                    animateOut:{opacity:0,top:250}
-                })
-                .addComponent('description',{
-                    center:true,
-                    width:481,
-                    height:295,
-                    bg:'imgs/description_bg.gif',
-                    css:{
-                        opacity:0,
-                        padding:'15px 10px 10px 10px',
-                        color:'#fff',
-                        fontSize:'15px',
-                        lineHeight:'18px',
-                        textAlign:'justify',
-                        top:240
-                    },
-                    text:'bilibili弹幕视频网现为国内最大的年轻人潮流文化娱乐社区，该网站于2009年6月26日创建，又称“B站”。B站是一个ACG动漫文化很浓厚的场所，与A站（AcFun）共同撑起了中国动漫的一片天。',
-                    animateIn:{opacity:1,top:190},
-                    animateOut:{opacity:0,top:240},
-                    delay:1000
-                })
-                .addComponent('people',{
-                    center:true,
-                    width:515,
-                    height:305,
-                    bg:'imgs/p1_people.png',
-                    css:{
-                        opacity:0,
-                        bottom:0
-                    },
-                    animateIn:{opacity:1,bottom:40},
-                    animateOut:{opacity:0,bottom:0},
-                    delay:500
-                })
-            
-            .addPage()
-                .addComponent('caption',{text:'年龄分布'})//polyline
-                .addComponent('polyline',{
-                    type:'polyline',
-                    data:[['70后',.010,'#ff7676'],['80后',.057],['90后',.762,'blue'],['00后',.183]],
-                    width:530,
-                    height:300,
-                    center:true,
-                    css:{opacity:0,top:200},
-                    animateIn:{opacity:1,top:250},
-                    animateOut:{opacity:0,top:100},
-                })
-                .addComponent('msg',{
-                    text:'90后用户占到76%',
-                    css:{
-                        opacity:0,top:160,
-                        textAlign:'center',width:'100%',color:'#ff7676'
-                    },
-                    animateIn:{ opacity:1},
-                    animateOut:{ opacity:0}
-                })
-            .addPage()
-                .addComponent('caption',{text:'性别分布'})//pie
-                .addComponent('pie',{
-                    type:'pie',
-                    data:[
-                        ['男' , .552, '#ff7676'],
-                        ['女' , .449]
-                    ],
-                    css:{top:200},
-                    width:300,
-                    height:300,
-                    center:true
-                })
-                .addComponent('msg',{
-                    text:'男女之比 约为 5:4',
-                    css:{
-                        opacity:0,bottom:120,
-                        textAlign:'center',width:'100%',color:'#ff7676'
-                    },
-                    animateIn:{ opacity:1},
-                    animateOut:{ opacity:0}
-                })
-            .addPage() //bar（bar_v）
-                .addComponent('caption',{text:'注册时间分布'})
-                .addComponent('bar',
-                            {
-                                type : 'bar',
-                                
-                                width : 530,
-                                height : 600,
-                                data:[
-                                    ['2012' , .019],
-                                    ['2013' , .091],
-                                    ['2014' , .212],
-                                    ['2015' , .53, '#ff7676'],
-                                    ['2016' , .133]
-                                ],
-                                css : {
-                                    top:100,
-                                    opacity:0
-                                },
-                                animateIn:{
-                                    opacity:1,
-                                    top:200,
-                                },
-                                animateOut:{
-                                    opacity:0,
-                                    top:100,
-                                },
-                                center : true,
-                            }
-                )
-                .addComponent('msg',{
-                    text:'2015年注册量 占到53.4%',
-                    css:{
-                        opacity:0,bottom:120,
-                        textAlign:'center',width:'100%',color:'#ff7676'
-                    },
-                    animateIn:{ opacity:1},
-                    animateOut:{ opacity:0}
-                })
-
-                .addPage() //（bar_v）
-                .addComponent('caption',{text:'注册时间分布'})
-                .addComponent('bar',
-                            {
-                                type : 'bar_v',
-                                width : 530,
-                                height : 400,
-                                data:[
-                                    ['2009' , .001],
-                                    ['2010' , .002],
-                                    ['2011' , .003],
-                                    ['2012' , .019],
-                                    ['2013' , .091],
-                                    ['2014' , .212],
-                                    ['2015' , .53, '#ff7676'],
-                                    ['2016' , .133]
-                                ],
-                                css : {
-                                    top:220,
-                                    opacity:0
-                                },
-                                animateIn:{
-                                    opacity:1,
-                                    top:200,
-                                },
-                                animateOut:{
-                                    opacity:0,
-                                    top:220,
-                                },
-                                center : true
-                            }
-                )
-                .addComponent('msg',{
-                    text:'截止自16年2月的注册的20119823位用户',
-                    css:{
-                        opacity:0,top:180,
-                        textAlign:'center',width:'100%',color:'#ff7676'
-                    },
-                    animateIn:{ opacity:1},
-                    animateOut:{ opacity:0}
-                })
-
-            .addPage()
-                .addComponent('caption',{text:'粉丝数目统计'})//radar
-
-                .addComponent('radar',{
-                    type : 'radar',
-                    width : 400,
-                    height : 400,
-                    data:[
-                        ['个级' , .834  ,'#ff7676'],
-                        ['十级' , .166 ],
-                        ['百级' , .048  ],
-                        ['千级' , .011  ],
-                        ['万级' , .002 ]
-                    ],
-                    css : {
-                        top:100,
-                        opacity:0
-                    },
-                    animateIn:{
-                        opacity:1,
-                        top:200,
-                    },
-                    animateOut:{
-                        opacity:0,
-                        top:100,
-                    },
-                    center : true,
-                })
-            .addPage()
-                .addComponent('caption',{text:'活跃度统计'})//ring
-                .addComponent('ring-all',{
-                    type : 'ring',center : true,
-                    width : 300,height : 300,
-                    data:[['活跃用户' , .4  ,'#ff7676']],
-                    css : { top:120,opacity:0 ,fontSize:'30px'},
-                    animateIn: { opacity:1},
-                    animateOut:{ opacity:0},
-                })
-               .addComponent('msg',{
-                    text:'注册人数达到2000万',
-                    css:{
-                        opacity:0,top:300,
-                        textAlign:'center',width:'100%',color:'#ff7676'
-                    },
-                    animateIn:{ opacity:1},
-                    animateOut:{ opacity:0},
-                    delay:1800,
-                })
-                .addComponent('ring-1',{
-                    type : 'ring',center : true,
-                    width : 140,height : 140,
-                    data:[['Lv1' , .2325  ,'darkorange']],
-                    css : { left:30,bottom:110,opacity:0,fontSize:'12px' },
-                    animateIn: { opacity:1},
-                    animateOut:{ opacity:0},
-                })
-                .addComponent('ring-2',{
-                    type : 'ring',
-                    width : 140,height : 140,
-                    data:[['Lv2' , .4829  ,'darkorange']],
-                    css : { left:30,bottom:110,opacity:0,fontSize:'12px' },
-                    animateIn: { opacity:1},
-                    animateOut:{ opacity:0},
-                })
-                .addComponent('ring-3',{
-                    type : 'ring',
-                    width : 140,height : 140,
-                    data:[['Lv3' , .2151  ,'darkorange']],
-                    css : { right:30,bottom:110,opacity:0,fontSize:'12px' },
-                    animateIn: { opacity:1},
-                    animateOut:{ opacity:0},
-                })
-                .addComponent('ring-3',{
-                    type : 'ring',
-                    width : 140,height : 140,
-                    data:[['Lv4' , .069  ,'darkorange']],
-                    css : { left:70,bottom:40,opacity:0,fontSize:'12px' },
-                    animateIn: { opacity:1},
-                    animateOut:{ opacity:0},
-                })
-                .addComponent('ring-3',{
-                    type : 'ring',
-                    width : 140,height : 140,
-                    data:[['Lv5+' , .003  ,'darkorange']],
-                    css : { right:70,bottom:40,opacity:0,fontSize:'12px' },
-                    animateIn: { opacity:1},
-                    animateOut:{ opacity:0},
-                })
-
-          .addPage()
-                .addComponent('caption',{text:'地理位置分布'})//point
-                .addComponent('point',{
-                type : 'point',
-                width : 300,
-                height : 300,
-                data:[
-                    ['广东' , 118527  ,'#ff7676'],
-                    ['江苏' , 83867  ,'#ffa3a4', '-35%' ,'-60%'],
-                    ['上海' , 75650  ,'#99c1ff','50%' ,'-120%']
-                ],
-                css : {
-                    bottom:'20%'
-                },
-                center : true,
-            })
-
-            .addPage('tail')
-                .addComponent('logo',{
-                    center:true,
-                    width:359,
-                    height:129,
-                    bg:'imgs/tail_logo.png',
-                    css:{top:240,opacity:0},
-                    animateIn:{opacity:1,top:210},
-                    animateOut:{opacity:0,top:240},
-                })
-                .addComponent('slogan',{
-                    center:true,
-                    width:314,
-                    height:46,
-                    bg:'imgs/tail_slogan.png',
-                    css:{top:280,opacity:0},
-                    animateIn:{opacity:1,left:'50%'},
-                    animateOut:{opacity:0,left:'0%'},
-                    delay:500,
-                    onclick: function(){
-                        window.location.href='http://ursb.me'
-                    }
-                })
-                .addComponent('share',{
-                    width:128,
-                    height:120,
-                    bg:'imgs/tail_share.png',
-                    css:{opacity:0,top:110,right:110},
-                    animateIn:{opacity:1,top:10,right:10},
-                    animateOut:{opacity:0,top:110,right:110},
-                    delay:1000 
-                })
-                .addComponent('back',{
-                    width:52,
-                    height:50,
-                    bg:'imgs/tail_back.png',
-                    center:true,
-                    onclick: function(){
-                         $.fn.fullpage.moveTo(1)
-                    }
-                })
-                .addComponent('text',{
-                    width:500,
-                    height:30,
-                    center:true,
-                    text:'2016 © Airing  仅供学习使用',
-                    css:{
-                        opacity:0,textAlign:'center',color:'#777',fontSize:'12px'
-                    },
-                    animateIn:{opacity:1,bottom:20},
-                    animateOut:{opacity:0,bottom:-50},
-                    onclick: function(){
-                        window.location.href='http://github.com/airingursb/bilibili-report'
-                    }
-                })
-            .loader([ 'imgs/face_bg.png','imgs/tail_back.png','imgs/tail_share.png','imgs/tail_slogan.png' ]);
-
-        });
-    </script>
-
-    </body>
+  });
+</script>
+</body>
 
 </html>
